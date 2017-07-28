@@ -1,10 +1,39 @@
+{{ newRequest | json }}
+
 <div fxLayout="column">
   <div fxFlex="60px" class="topbar">
     <h1>New Requests</h1>
     <button pButton icon="fa-check" class="topbar-button" iconPos="left" type="button" label="Schedule Request" [routerLink]="['newrequest']"></button>
   </div>
-
   <div fxFlex="grow" class="content-section">
       <h2>New Request</h2>
+  </div>
+
+  <div fxLayout="column">
+    <div fxLayout="column"  fxFlex="33" class="form-box">
+    <label for="environment">Environment:</label>
+    <p-dropdown id="environment" 
+      [options]="environments" 
+      [(ngModel)]="newRequest.environment"
+      [autoWidth] = "false"
+      placeholder="Select an Environment"
+      ></p-dropdown>
+  </div>
+
+  <h4>Databases:</h4>
+
+  <div fxLayout="column">
+  <div fxLayout="row" fxFlex="33" *ngFor="let d of databases" class="form-box">
+    <input 
+      type="checkbox"
+      id="{{ d.label }}db"
+      (change)="onDbToggle(d.label, $event)">{{ d.label }}
+  </div>
+  </div>
+
+  <div fxLayout="column">
+    <div>
+      <button pButton icon="fa-check"iconPos="left" type="button" label="Submit Request" (click)="onSubmit()"></button>
+    </div>
   </div>
 </div>
